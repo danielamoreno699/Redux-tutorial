@@ -1,8 +1,13 @@
 import CartItem from "./CartItem";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch} from "react-redux";
+import { clearCart } from "../features/cart/cartSlice";
 import React from 'react'
 
+
 const CartContainer = () => {
+
+    const dispatch = useDispatch()
+
     const {cartItems, total, amount} = useSelector((store) => store.cart)
 if(amount < 1){
     
@@ -15,7 +20,7 @@ if(amount < 1){
    
   )
 }
-return  <section class="cart">
+return  <section className="cart">
     <header>
         <div>
             {cartItems.map((item) => {
@@ -27,12 +32,14 @@ return  <section class="cart">
         <hr/>
         <div className="cart-total">
         <h4>
-            total <span>${total}</span>
+            total <span>${total.toFixed(2)}</span>
         </h4>
         </div>
         
     </footer>
-    <button className="btn clear-btn">clear cart</button>
+    <button className="btn clear-btn" onClick = {() => dispatch(clearCart())}>
+        clear cart
+    </button>
 </section>
 }
 
